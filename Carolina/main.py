@@ -5,7 +5,6 @@ if __name__ == "__main__":
     print(g)
     if g.autenticar("123123", 1231231):
         print(g.cancelar_operacao())
-        print(g.demitir())
     else:
         print("falha de autenticação")
 
