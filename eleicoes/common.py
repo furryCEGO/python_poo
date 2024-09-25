@@ -1,3 +1,4 @@
+from abc import abstractmethod
 class Pessoa:
     __nome : str
     __RG : str
@@ -17,6 +18,9 @@ class Pessoa:
     def __repr__(self):
         return f"Pessoa(nome='{self.__nome}', RG='{self.__RG}', CPF='{self.__CPF}')"
 
+    @abstractmethod
+    def assinatura_eletronica(self):
+        pass
 class Eleitor(Pessoa):
     __titulo : int
     secao : int
@@ -55,3 +59,32 @@ class Candidato(Pessoa):
         return f"Candidato({super().__repr__()}, numero='{self.__numero}')"
     def get_numero(self):
         return self.__numero
+    def assinatura_eletronica(self):
+        dados_para_hash = self.__str__()
+        dados_em_byte = dados_para_hash.encode('utf-8')
+        hash = hashlib.sha1(dados_em_byte)
+        return hash.hexdigest()
+
+    def assinatura_eletronica(self):
+        dados_para_hash = self.__str__()
+        dados_em_byte = dados_para_hash.encode('utf-8')
+        hash = hashlib.sha1(dados_em_byte)
+        return hash.hexdigest()
+
+class Juiz(Pessoa):
+    __registro : int
+
+    def __init__(self, nome : str, RG : str , CPF : str, registro :int):
+        super().__init__(nome, RG, CPF)
+        self.__registro = registro
+
+    def __str__(self):
+        info = super().__str__()
+        info += f'Registro: {self.__registro}'
+        return info
+
+    def assinatura_eletronica(self):
+        dados_para_hash = self.__str__()
+        dados_em_byte = dados_para_hash.encode('utf-8')
+        hash = hashlib.sha1(dados_em_byte)
+        return hash.hexdigest()
